@@ -1,0 +1,29 @@
+{
+    "name" : "smart-information-systems/geo-bundle",
+    "description" : "Geo bundle",
+    "type" : "symfony-bundle",
+    "authors" : [
+        {
+            "name" : "YK115",
+            "email" : "info@smart-systems.ru"
+        }
+    ],
+    "keywords" : [
+        "geo"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "php": ">=7.0",
+        "symfony/symfony": "3.2.*"
+    },
+    "autoload" : {
+        "psr-4" : { "SmartInformationSystems\\GeoBundle\\" : "" }
+    },
+    "extra" : {
+        "branch-alias" : {
+            "dev-master" : "2.0-dev"
+        }
+    }
+}
