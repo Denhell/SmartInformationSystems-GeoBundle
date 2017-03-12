@@ -1,0 +1,3 @@
+services:
+    smart_information_systems_geo.geo_service:
+        class: SmartInformationSystems\GeoBundle\Service\GeoService
