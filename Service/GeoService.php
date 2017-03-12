@@ -26,12 +26,27 @@ class GeoService
      */
     public function locationByIp($ip)
     {
-        $res = file_get_contents($this->config['api_url'] . '?' . http_build_query([
-            'type' => 'json',
-            'c' => $this->config['client_key'],
-            'ip' => $ip,
-        ]));
+        $rawResponse = file_get_contents($this->config['api_url'] . '/q/ip/json?' . http_build_query([
+                'c' => $this->config['client_key'],
+                'ip' => $ip,
+            ]));
 
-        return json_decode($res, true);
+        if (empty($rawResponse)) {
+            throw new \RuntimeException('Error requesting geo api');
+        }
+
+        if (!($response = json_decode($rawResponse, true))) {
+            throw new \RuntimeException('Error parsing api response: ' . $rawResponse);
+        }
+
+        if (empty($response['result'])
+            || $response['result'] !== 'success'
+            || empty($response['data'])
+            || empty($response['data']['location'])
+        ) {
+            return null;
+        }
+
+        return $response['data']['location'];
     }
 }
