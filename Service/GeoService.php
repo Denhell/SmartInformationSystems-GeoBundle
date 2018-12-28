@@ -9,7 +9,7 @@ class GeoService
     private $config = [
         'api_url' => null,
         'client_key' => null,
-        'timeout' => 200,
+        'timeout' => 500,
     ];
 
     /**
