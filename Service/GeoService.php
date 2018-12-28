@@ -9,6 +9,7 @@ class GeoService
     private $config = [
         'api_url' => null,
         'client_key' => null,
+        'timeout' => 200,
     ];
 
     /**
@@ -16,7 +17,7 @@ class GeoService
      */
     public function setConfig(array $config)
     {
-        $this->config = $config;
+        $this->config = array_merge($this->config, $config);
     }
 
     /**
@@ -26,10 +27,17 @@ class GeoService
      */
     public function locationByIp($ip)
     {
-        $rawResponse = file_get_contents($this->config['api_url'] . '/q/ip/json?' . http_build_query([
-                'c' => $this->config['client_key'],
-                'ip' => $ip,
-            ]));
+        $ch = curl_init($this->config['api_url'] . '/q/ip/json?' . http_build_query([
+            'c' => $this->config['client_key'],
+            'ip' => $ip,
+        ]));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT_MS, $this->config['timeout']);
+        $rawResponse = curl_exec($ch);
+
+        if ($errorCode = curl_errno($ch)) {
+            throw new \RuntimeException(curl_error($ch), $errorCode);
+        }
 
         if (empty($rawResponse)) {
             throw new \RuntimeException('Error requesting geo api');
