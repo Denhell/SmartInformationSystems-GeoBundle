@@ -20,7 +20,7 @@
         "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0"
     },
     "autoload" : {
-        "psr-4" : { "Denhell\\SmartInformationSystems-GeoBundle\\" : "" }
+        "psr-4" : { "SmartInformationSystems\\GeoBundle\\" : "" }
     },
     "extra" : {
         "branch-alias" : {
